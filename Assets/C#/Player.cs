@@ -1,11 +1,12 @@
 using TMPro;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
-    [SerializeField] TextMeshProUGUI infoText;
+    [SerializeField] GameObject hp3;
+    [SerializeField] GameObject hp2;
+    [SerializeField] GameObject hp1;
     private void Awake()
     {
         if (Instance == null)
@@ -25,10 +26,26 @@ public class Player : MonoBehaviour
     public void UpdateHealth(int health)
     {
         playerHealth = Mathf.Clamp(playerHealth + health, 0, 3);
-        infoText.text = $"HP = {playerHealth.ToString()} ";
+        if(playerHealth == 3)
+        {
+            hp3.SetActive(true);
+        }
+        else if (playerHealth == 2)
+        {
+            hp2.SetActive(true);
+            hp3.SetActive(false);
+        }
+        else if (playerHealth == 1)
+        {
+            hp2.SetActive(false);
+            hp3.SetActive(false);
+            hp1.SetActive(true);
+        }
         if (health == 0)
         {
-            //dyntka
+            hp2.SetActive(false);
+            hp3.SetActive(false);
+            hp1.SetActive(false);
         }
     }
 

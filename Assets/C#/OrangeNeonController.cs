@@ -69,6 +69,7 @@ public class OrangeNeonController : MonoBehaviour, INeons
         gameObject.SetActive(false);
         elapsedTime = 0f;
         neonVisual.SetActive(false);
+        OrangeNeonSound.Instance.PlaySound();
         ProgressionManager.Instance.updateOrangeCounter();
         NeonsSpawner.Instance.CheckHowManyOrangeActive();
         CanPickUp = false;

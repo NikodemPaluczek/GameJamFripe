@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ProgressionManager : MonoBehaviour
 {
@@ -18,25 +19,29 @@ public class ProgressionManager : MonoBehaviour
     private int greenNeonsCounter = 0;
     private int pinkNeonsCounter = 0;
 
-    [SerializeField] TextMeshProUGUI infoTextOrange;
-    [SerializeField] TextMeshProUGUI infoTextGreen;
-    [SerializeField] TextMeshProUGUI infoTextPink;
+    [SerializeField] Image orangeCounter;
+    [SerializeField] Image pinkCounter;
+    [SerializeField] Image greenCounter;
+
+    [SerializeField] Sprite[] orangeCounterSprites;
+    [SerializeField] Sprite[] pinkCounterSprites;
+    [SerializeField] Sprite[] greenCounterSprites;
     public void updateOrangeCounter()
     {
         orangeNeonsCounter++;
         math.clamp(orangeNeonsCounter, 0, 5); //we have to gather 5 of each
-        infoTextOrange.text = $"Orange Counter = {orangeNeonsCounter.ToString()} ";
+        orangeCounter.sprite = orangeCounterSprites[orangeNeonsCounter];
     }
     public void updateGreenCounter()
     {
         greenNeonsCounter++;
         math.clamp(greenNeonsCounter, 0, 5); //we have to gather 5 of each
-        infoTextGreen.text = $"Green Counter = {greenNeonsCounter.ToString()} ";
+        greenCounter.sprite = greenCounterSprites[greenNeonsCounter];
     }
     public void updatePinkCounter()
     {
         pinkNeonsCounter++;
         math.clamp(pinkNeonsCounter, 0, 5); //we have to gather 5 of each
-        infoTextPink.text = $"Pink Counter = {pinkNeonsCounter.ToString()} ";
+        pinkCounter.sprite = pinkCounterSprites[pinkNeonsCounter];
     }
 }
