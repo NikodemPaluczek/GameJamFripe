@@ -97,11 +97,24 @@ public class FlashlighController : MonoBehaviour
     IEnumerator UseOrangeAbility()
     {
         FlashlightOn();
+        Ray ray = new Ray(transform.position, transform.forward);
+
+
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+        {
+            Enemy enemy = hit.collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                Debug.Log("enemy hit");
+                StartCoroutine(enemy.OrangeAttack());
+            }
+        }
         yield return new WaitForSeconds(1f);
         FlashlightOff();
         currentActiveNeon = ActiveNeon.None;
         visualRenderer.material = startMat;
-        
+
+
     }
 
     public void ResetProgress()

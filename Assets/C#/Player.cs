@@ -5,7 +5,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private InputSystem inputSystem;
     [SerializeField] private float movementSpeed = 7f;
-    [SerializeField] private float rotationSpeed = 3f;
+    [SerializeField] private float rotationSpeed = 5f;
     private void Update()
     {
         HandleMovement();
