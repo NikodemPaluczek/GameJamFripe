@@ -6,6 +6,8 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
 
+    [SerializeField] ToxicSpot toxicSpot;
+
     private int heathPoints = 2;
 
     [SerializeField] private Transform playerPosition;
@@ -25,7 +27,8 @@ public class Enemy : MonoBehaviour
 
     public void EnemyDeath()
     {
-
+        Instantiate(toxicSpot, transform.position, Quaternion.Euler(-90, 0,0));
+        this.gameObject.SetActive(false);
     }
 
     public IEnumerator OrangeAttack()
@@ -35,7 +38,7 @@ public class Enemy : MonoBehaviour
         heathPoints--;
         if (heathPoints == 0)
         {
-            this.gameObject.SetActive(false);
+            EnemyDeath();
             yield break;
         }
         agent.isStopped = true;
@@ -52,7 +55,7 @@ public class Enemy : MonoBehaviour
         
         if (heathPoints == 0)
         {
-            this.gameObject.SetActive(false);
+            EnemyDeath();
             yield break;
         }
         agent.isStopped = true;
@@ -67,7 +70,7 @@ public class Enemy : MonoBehaviour
         heathPoints--;
         if (heathPoints == 0)
         {
-            this.gameObject.SetActive(false);
+            EnemyDeath();
             yield break;
         }
 
