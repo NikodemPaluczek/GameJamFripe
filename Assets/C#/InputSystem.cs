@@ -34,6 +34,10 @@ public class InputSystem : MonoBehaviour
         {
             flashlighController.FlashlightOff();
         }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            flashlighController.TryToPickUpNeon();
+        }
     }
     public Vector2 MovementInput()
     {

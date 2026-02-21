@@ -4,11 +4,13 @@ using UnityEngine;
 public class OrangeNeonController : MonoBehaviour, INeons
 {
     [SerializeField] FlashlighController flashlighController;
+    [SerializeField] ProgressionManager progressionManager;
+
+
     [SerializeField] Material materialForFlashlight;
 
     [SerializeField] GameObject neonVisual;
     [SerializeField] Renderer visualRenderer;
-    [SerializeField] float emissionIntenisty = 5f;
 
     private Material mat;
     private float duration = 3f;
@@ -17,12 +19,20 @@ public class OrangeNeonController : MonoBehaviour, INeons
 
     Color orangeColor = new Color(254f / 255f, 134f / 255f, 22f / 255f);
 
+    public bool CanPickUp { get ; set; }
+    public string NeonColor { get; set; }
+
+    private void Start()
+    {
+        NeonColor = "Orange";
+    }
     public void AcquireNeon()
     {
         Renderer FlashlightVisualrenderer = flashlighController.flashlightVisual.GetComponent<Renderer>();
 
         FlashlightVisualrenderer.material = materialForFlashlight;
-        Destroy(gameObject);
+        CanPickUp = true;
+        
     }
 
     public void ActivateVisual()
@@ -34,15 +44,30 @@ public class OrangeNeonController : MonoBehaviour, INeons
     {
         mat = visualRenderer.material;
         mat.EnableKeyword("_EMISSION");
-        Color baseColor = orangeColor;
         if (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             float intensity = Mathf.Lerp(0f, targetIntensity, elapsedTime / duration);
-            mat.SetColor("_EmissionColor", baseColor * intensity);
+            mat.SetColor("_EmissionColor", orangeColor * intensity);
         }
     }
-        
+
+    public void ResetActivationAndEmission()
+    {
+        if (!CanPickUp)
+        {
+            elapsedTime = 0f;
+            neonVisual.SetActive(false);
+        }
+
+    }
+
+    public void PickUpNeon()
+    {
+        gameObject.SetActive(false);
+        progressionManager.updateOrangeCounter();
+
+    }
 
     private void Update()
     {

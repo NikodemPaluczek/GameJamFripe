@@ -12,7 +12,7 @@ public class FlashlighController : MonoBehaviour
 
     private INeons currentNeon;
     private float holdTimer;
-    
+
 
     private void Start()
     {
@@ -30,6 +30,7 @@ public class FlashlighController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistance) &&
             hit.collider.TryGetComponent<INeons>(out INeons neon))
         {
+
             neon.ActivateVisual();
             neon.IncreaseEmission();
             if (neon == currentNeon)
@@ -57,7 +58,12 @@ public class FlashlighController : MonoBehaviour
     private void ResetProgress()
     {
         holdTimer = 0f;
+        if(currentNeon != null)
+        {
+            currentNeon.ResetActivationAndEmission();
+        }
         currentNeon = null;
+
     }
 
     public void FlashlightOn()
@@ -69,5 +75,18 @@ public class FlashlighController : MonoBehaviour
     {
         flashlightVisual.SetActive(false);
         flashlightLight.intensity = 0f;
+    }
+
+    internal void TryToPickUpNeon()
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance) &&
+            hit.collider.TryGetComponent<INeons>(out INeons neon))
+        {
+            if (neon.CanPickUp)
+            {
+                neon.PickUpNeon();
+            }
+        }
     }
 }
