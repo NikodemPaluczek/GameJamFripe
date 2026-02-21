@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
 
@@ -14,20 +15,31 @@ public class FlashlighController : MonoBehaviour
             Destroy(gameObject);
     }
 
-
     public GameObject flashlightVisual;
     public Light flashlightLight;
     private float maxDistance = 1f;
     [SerializeField] private float flashlightIntensity = 2f;
     [SerializeField] private float requiredHoldTime = 3f;
 
+    Renderer visualRenderer;
+
     private INeons currentNeon;
     private float holdTimer;
+
+    [SerializeField] private Material startMat;
+
+    private enum ActiveNeon
+    {
+        None,
+        Orange
+    }
+    private ActiveNeon currentActiveNeon = ActiveNeon.None;
 
 
     private void Start()
     {
-        
+        visualRenderer = flashlightVisual.GetComponent<Renderer>();
+        startMat = visualRenderer.material;
     }
     private void Update()
     {
@@ -35,35 +47,61 @@ public class FlashlighController : MonoBehaviour
     }
     public void TryToGetNeon()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-
-        
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance) &&
-            hit.collider.TryGetComponent<INeons>(out INeons neon))
+        if (currentActiveNeon == ActiveNeon.None)
         {
+            Ray ray = new Ray(transform.position, transform.forward);
 
-            neon.ActivateVisual();
-            neon.IncreaseEmission();
-            if (neon == currentNeon)
+
+            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance) &&
+                hit.collider.TryGetComponent<INeons>(out INeons neon))
             {
-                holdTimer += Time.deltaTime;
 
-                if (holdTimer >= requiredHoldTime)
+                neon.ActivateVisual();
+                neon.IncreaseEmission();
+                if (neon == currentNeon)
                 {
-                    neon.AcquireNeon();
-                    ResetProgress();
+                    holdTimer += Time.deltaTime;
+
+                    if (holdTimer >= requiredHoldTime)
+                    {
+                        neon.AcquireNeon();
+                        FlashlightOff();
+                        ResetProgress();
+                        if (neon.NeonColor == "Orange")
+                        {
+                            currentActiveNeon = ActiveNeon.Orange;
+                        }
+                    }
+                }
+                else
+                {
+                    currentNeon = neon;
+                    holdTimer = 0f;
                 }
             }
             else
             {
-                currentNeon = neon;
-                holdTimer = 0f;
+                ResetProgress();
             }
+        }
+        else if (currentActiveNeon == ActiveNeon.Orange && Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(UseOrangeAbility());
         }
         else
         {
-            ResetProgress();
+            Debug.Log("enum currentactive nawalil");
         }
+    }
+
+    IEnumerator UseOrangeAbility()
+    {
+        FlashlightOn();
+        yield return new WaitForSeconds(1f);
+        FlashlightOff();
+        currentActiveNeon = ActiveNeon.None;
+        visualRenderer.material = startMat;
+        
     }
 
     public void ResetProgress()

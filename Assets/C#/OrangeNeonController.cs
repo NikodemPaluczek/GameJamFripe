@@ -34,6 +34,7 @@ public class OrangeNeonController : MonoBehaviour, INeons
         FlashlightVisualrenderer.material = materialForFlashlight;
         CanPickUp = true;
         
+        
     }
 
     public void ActivateVisual()
@@ -66,7 +67,10 @@ public class OrangeNeonController : MonoBehaviour, INeons
     public void PickUpNeon()
     {
         gameObject.SetActive(false);
+        elapsedTime = 0f;
+        neonVisual.SetActive(true);
         ProgressionManager.Instance.updateOrangeCounter();
+        NeonsSpawner.Instance.CheckHowManyOrangeActive();
 
     }
 
