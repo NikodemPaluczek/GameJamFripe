@@ -31,7 +31,8 @@ public class FlashlighController : MonoBehaviour
     private enum ActiveNeon
     {
         None,
-        Orange
+        Orange,
+        Green
     }
     private ActiveNeon currentActiveNeon = ActiveNeon.None;
 
@@ -71,6 +72,10 @@ public class FlashlighController : MonoBehaviour
                         {
                             currentActiveNeon = ActiveNeon.Orange;
                         }
+                        else if(neon.NeonColor == "Green")
+                        {
+                            currentActiveNeon = ActiveNeon.Green;
+                        }
                     }
                 }
                 else
@@ -87,6 +92,10 @@ public class FlashlighController : MonoBehaviour
         else if (currentActiveNeon == ActiveNeon.Orange && Input.GetKeyDown(KeyCode.E))
         {
             StartCoroutine(UseOrangeAbility());
+        }
+        else if (currentActiveNeon == ActiveNeon.Green && Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(UseGreenAbility());
         }
         else
         {
@@ -107,6 +116,29 @@ public class FlashlighController : MonoBehaviour
             {
                 Debug.Log("enemy hit");
                 StartCoroutine(enemy.OrangeAttack());
+            }
+        }
+        yield return new WaitForSeconds(1f);
+        FlashlightOff();
+        currentActiveNeon = ActiveNeon.None;
+        visualRenderer.material = startMat;
+
+
+    }
+
+    IEnumerator UseGreenAbility()
+    {
+        FlashlightOn();
+        Ray ray = new Ray(transform.position, transform.forward);
+
+
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+        {
+            Enemy enemy = hit.collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                Debug.Log("enemy hit");
+                StartCoroutine(enemy.GreenAttack());
             }
         }
         yield return new WaitForSeconds(1f);

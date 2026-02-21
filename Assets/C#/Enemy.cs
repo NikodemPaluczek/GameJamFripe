@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
     private float distance;
 
-    [SerializeField] private float enemySeeingRange = 5f;
+    [SerializeField] private float enemySeeingRange = 15f;
 
     public IEnumerator OrangeAttack()
     {
@@ -31,7 +31,24 @@ public class Enemy : MonoBehaviour
             yield break;
         }
         agent.isStopped = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
+        isUnderAttack = false;
+        agent.isStopped = false;
+    }
+    public IEnumerator GreenAttack()
+    {
+        Debug.Log("korutyna sie odpala");
+        isUnderAttack = true;
+        heathPoints--;
+        Player.Instance.UpdateHealth(1);
+        
+        if (heathPoints == 0)
+        {
+            this.gameObject.SetActive(false);
+            yield break;
+        }
+        agent.isStopped = true;
+        yield return new WaitForSeconds(3f);
         isUnderAttack = false;
         agent.isStopped = false;
     }
@@ -59,7 +76,8 @@ public class Enemy : MonoBehaviour
             {
                 if (currentDestination == playerPosition)
                 {
-                    agent.isStopped = true;
+                    StartCoroutine(TryToAttack());
+                    
                 }
                 else
                 {
@@ -72,5 +90,20 @@ public class Enemy : MonoBehaviour
                 agent.destination = currentDestination.position;
             }
         }
+    }
+
+    private IEnumerator TryToAttack()
+    {
+        isUnderAttack = true;
+        agent.isStopped = true;
+        yield return new WaitForSeconds(1f);
+
+        if (distance < minDistance)
+        {
+            Player.Instance.UpdateHealth(-1);
+
+        }
+        agent.isStopped = false;
+        isUnderAttack = false;
     }
 }
