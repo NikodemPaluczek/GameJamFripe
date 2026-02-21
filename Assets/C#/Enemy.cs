@@ -25,6 +25,9 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float enemySeeingRange = 15f;
 
+
+
+
     public void EnemyDeath()
     {
         Instantiate(toxicSpot, transform.position, Quaternion.Euler(-90, 0,0));
