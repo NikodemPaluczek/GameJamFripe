@@ -17,7 +17,7 @@ public class FlashlighController : MonoBehaviour
 
     public GameObject flashlightVisual;
     public Light flashlightLight;
-    private float maxDistance = 1f;
+    private float maxDistance = 3f;
     [SerializeField] private float flashlightIntensity = 2f;
     [SerializeField] private float requiredHoldTime = 3f;
 
