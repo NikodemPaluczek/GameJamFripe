@@ -16,11 +16,18 @@ public class NeonsSpawner : MonoBehaviour
     }
 
     [SerializeField] private List<OrangeNeonController> orangeNeons;
+    [SerializeField] private List<GreenNeonController> greenNeons;
+    [SerializeField] private List<PinkNeonController> pinkNeons;
+
     private int orangeActive;
+    private int greenActive;
+    private int pinkActive;
 
     private void Start()
     {
-        Spawn3NeonsAtRandomSpawnpoints();
+        Spawn3OrangeNeonsAtRandomSpawnpoints();
+        Spawn3GreenNeonsAtRandomSpawnpoints();
+        Spawn3PinkNeonsAtRandomSpawnpoints();
     }
 
     public void CheckHowManyOrangeActive()
@@ -35,11 +42,41 @@ public class NeonsSpawner : MonoBehaviour
         }
         if (orangeActive == 0)
         {
-            Spawn3NeonsAtRandomSpawnpoints();
+            Spawn3OrangeNeonsAtRandomSpawnpoints();
+        }
+    }
+    public void CheckHowManyGreenActive()
+    {
+        greenActive = 0;
+        foreach (GreenNeonController greenNeon in greenNeons)
+        {
+            if (greenNeon.gameObject.activeSelf)
+            {
+                greenActive++;
+            }
+        }
+        if (greenActive == 0)
+        {
+            Spawn3GreenNeonsAtRandomSpawnpoints();
+        }
+    }
+    public void CheckHowManyPinkActive()
+    {
+        pinkActive = 0;
+        foreach (PinkNeonController pinkNeon in pinkNeons)
+        {
+            if (pinkNeon.gameObject.activeSelf)
+            {
+                pinkActive++;
+            }
+        }
+        if (pinkActive == 0)
+        {
+            Spawn3PinkNeonsAtRandomSpawnpoints();
         }
     }
 
-    private void Spawn3NeonsAtRandomSpawnpoints()
+    private void Spawn3OrangeNeonsAtRandomSpawnpoints()
     {
         
         for (int i = 0; i < 3; i++)
@@ -52,6 +89,38 @@ public class NeonsSpawner : MonoBehaviour
             }
             orangeNeons[randomNumber].gameObject.SetActive(true);
             
+
+        }
+    }
+    private void Spawn3GreenNeonsAtRandomSpawnpoints()
+    {
+
+        for (int i = 0; i < 3; i++)
+        {
+            int randomNumber = Random.Range(0, greenNeons.Count);
+            if (greenNeons[randomNumber].gameObject.activeSelf)
+            {
+                i--;
+                continue;
+            }
+            greenNeons[randomNumber].gameObject.SetActive(true);
+
+
+        }
+    }
+    private void Spawn3PinkNeonsAtRandomSpawnpoints()
+    {
+
+        for (int i = 0; i < 3; i++)
+        {
+            int randomNumber = Random.Range(0, pinkNeons.Count);
+            if (pinkNeons[randomNumber].gameObject.activeSelf)
+            {
+                i--;
+                continue;
+            }
+            pinkNeons[randomNumber].gameObject.SetActive(true);
+
 
         }
     }

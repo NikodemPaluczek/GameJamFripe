@@ -18,7 +18,15 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
     private float distance;
 
+    private Vector3 pushBackDir;
+    [SerializeField] private float explosionForce = 3f;
+
     [SerializeField] private float enemySeeingRange = 15f;
+
+    public void EnemyDeath()
+    {
+
+    }
 
     public IEnumerator OrangeAttack()
     {
@@ -52,7 +60,27 @@ public class Enemy : MonoBehaviour
         isUnderAttack = false;
         agent.isStopped = false;
     }
+    public IEnumerator PinkAttack()
+    {
+        Debug.Log("korutyna sie odpala");
+        isUnderAttack = true;
+        heathPoints--;
+        if (heathPoints == 0)
+        {
+            this.gameObject.SetActive(false);
+            yield break;
+        }
 
+        agent.isStopped = true;
+
+        pushBackDir = transform.position - playerPosition.position;
+
+        transform.position += pushBackDir * explosionForce;
+        playerPosition.position -= pushBackDir * explosionForce;
+        yield return new WaitForSeconds(15f);
+        isUnderAttack = false;
+        agent.isStopped = false;
+    }
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -96,7 +124,7 @@ public class Enemy : MonoBehaviour
     {
         isUnderAttack = true;
         agent.isStopped = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
 
         if (distance < minDistance)
         {

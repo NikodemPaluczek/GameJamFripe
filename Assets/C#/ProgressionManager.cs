@@ -15,11 +15,28 @@ public class ProgressionManager : MonoBehaviour
     }
 
     private int orangeNeonsCounter = 0;
-    [SerializeField] TextMeshProUGUI infoText;
+    private int greenNeonsCounter = 0;
+    private int pinkNeonsCounter = 0;
+
+    [SerializeField] TextMeshProUGUI infoTextOrange;
+    [SerializeField] TextMeshProUGUI infoTextGreen;
+    [SerializeField] TextMeshProUGUI infoTextPink;
     public void updateOrangeCounter()
     {
         orangeNeonsCounter++;
         math.clamp(orangeNeonsCounter, 0, 5); //we have to gather 5 of each
-        infoText.text = $"Orange Counter = {orangeNeonsCounter.ToString()} ";
+        infoTextOrange.text = $"Orange Counter = {orangeNeonsCounter.ToString()} ";
+    }
+    public void updateGreenCounter()
+    {
+        greenNeonsCounter++;
+        math.clamp(greenNeonsCounter, 0, 5); //we have to gather 5 of each
+        infoTextGreen.text = $"Green Counter = {greenNeonsCounter.ToString()} ";
+    }
+    public void updatePinkCounter()
+    {
+        pinkNeonsCounter++;
+        math.clamp(pinkNeonsCounter, 0, 5); //we have to gather 5 of each
+        infoTextPink.text = $"Pink Counter = {pinkNeonsCounter.ToString()} ";
     }
 }

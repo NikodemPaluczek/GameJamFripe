@@ -68,19 +68,12 @@ public class OrangeNeonController : MonoBehaviour, INeons
     {
         gameObject.SetActive(false);
         elapsedTime = 0f;
-        neonVisual.SetActive(true);
+        neonVisual.SetActive(false);
         ProgressionManager.Instance.updateOrangeCounter();
         NeonsSpawner.Instance.CheckHowManyOrangeActive();
+        CanPickUp = false;
 
     }
 
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.Space))
-        {
-
-            
-        }
-    }
 
 }

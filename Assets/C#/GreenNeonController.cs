@@ -51,9 +51,10 @@ public class GreenNeonController : MonoBehaviour, INeons
     {
         gameObject.SetActive(false);
         elapsedTime = 0f;
-        neonVisual.SetActive(true);
-        ProgressionManager.Instance.updateOrangeCounter();
-        NeonsSpawner.Instance.CheckHowManyOrangeActive();
+        neonVisual.SetActive(false);
+        ProgressionManager.Instance.updateGreenCounter();
+        NeonsSpawner.Instance.CheckHowManyGreenActive();
+        CanPickUp = false;
     }
 
     public void ResetActivationAndEmission()
