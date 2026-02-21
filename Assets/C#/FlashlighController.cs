@@ -4,6 +4,17 @@ using UnityEngine.UIElements.Experimental;
 
 public class FlashlighController : MonoBehaviour
 {
+    public static FlashlighController Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+
     public GameObject flashlightVisual;
     public Light flashlightLight;
     private float maxDistance = 1f;
@@ -55,7 +66,7 @@ public class FlashlighController : MonoBehaviour
         }
     }
 
-    private void ResetProgress()
+    public void ResetProgress()
     {
         holdTimer = 0f;
         if(currentNeon != null)

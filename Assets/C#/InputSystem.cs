@@ -33,6 +33,7 @@ public class InputSystem : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.E))
         {
             flashlighController.FlashlightOff();
+            flashlighController.ResetProgress();
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {

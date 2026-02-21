@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class OrangeNeonController : MonoBehaviour, INeons
 {
-    [SerializeField] FlashlighController flashlighController;
-    [SerializeField] ProgressionManager progressionManager;
 
 
     [SerializeField] Material materialForFlashlight;
@@ -16,8 +14,11 @@ public class OrangeNeonController : MonoBehaviour, INeons
     private float duration = 3f;
     private float elapsedTime = 0f;
     private float targetIntensity = 400f;
+    
 
     Color orangeColor = new Color(254f / 255f, 134f / 255f, 22f / 255f);
+
+
 
     public bool CanPickUp { get ; set; }
     public string NeonColor { get; set; }
@@ -28,7 +29,7 @@ public class OrangeNeonController : MonoBehaviour, INeons
     }
     public void AcquireNeon()
     {
-        Renderer FlashlightVisualrenderer = flashlighController.flashlightVisual.GetComponent<Renderer>();
+        Renderer FlashlightVisualrenderer = FlashlighController.Instance.flashlightVisual.GetComponent<Renderer>();
 
         FlashlightVisualrenderer.material = materialForFlashlight;
         CanPickUp = true;
@@ -65,7 +66,7 @@ public class OrangeNeonController : MonoBehaviour, INeons
     public void PickUpNeon()
     {
         gameObject.SetActive(false);
-        progressionManager.updateOrangeCounter();
+        ProgressionManager.Instance.updateOrangeCounter();
 
     }
 
