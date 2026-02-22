@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform playerPosition;
     [SerializeField] private Transform[] patrolpoints;
     private Transform currentDestination;
-    private float minDistance = 1f;
+    private float minDistance = 2f;
 
     private bool isUnderAttack = false;
 

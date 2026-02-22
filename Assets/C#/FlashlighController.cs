@@ -41,6 +41,7 @@ public class FlashlighController : MonoBehaviour
     private void Start()
     {
         startColor = flashlightLight.color;
+        FlashlightOff();
     }
     private void Update()
     {

@@ -8,6 +8,7 @@ public class InputSystem : MonoBehaviour
     InputSystem_Actions inputActions;
     [SerializeField] private FlashlighController flashlighController;
     private Vector2 movementInput;
+    private Vector2 rotationInput;
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
@@ -15,6 +16,7 @@ public class InputSystem : MonoBehaviour
         
         inputActions.Player.Move.Enable();
         inputActions.Player.Interact.Enable();
+        inputActions.Player.Rotate.Enable();
 
         inputActions.Player.Interact.performed += i => flashlighController.TryToGetNeon();
 
@@ -44,5 +46,10 @@ public class InputSystem : MonoBehaviour
     {
         movementInput = inputActions.Player.Move.ReadValue<Vector2>();
         return movementInput;
+    }
+    public Vector2 RotationInput()
+    {
+        rotationInput = inputActions.Player.Rotate.ReadValue<Vector2>();
+        return rotationInput;
     }
 }

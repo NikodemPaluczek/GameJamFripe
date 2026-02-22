@@ -76,7 +76,11 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         Vector2 movementInput = inputSystem.MovementInput();
+        Vector2 rotationInput = inputSystem.RotationInput();
+
         Vector3 moveDir = new Vector3(movementInput.x, 0, movementInput.y);
+        Vector3 rotDir = new Vector3(rotationInput.x, 0, rotationInput.y);
+
         float moveDistance = movementSpeed * Time.deltaTime;
 
         if (moveDir != Vector3.zero)
@@ -89,6 +93,6 @@ public class Player : MonoBehaviour
         }
 
         transform.position += moveDir.normalized * movementSpeed * Time.deltaTime;
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, rotationSpeed * Time.deltaTime);
+        transform.forward = Vector3.Slerp(transform.forward, rotDir, rotationSpeed * Time.deltaTime);
     }
 }

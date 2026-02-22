@@ -25,9 +25,9 @@ public class NeonsSpawner : MonoBehaviour
 
     private void Start()
     {
-        Spawn7OrangeNeonsAtRandomSpawnpoints();
-        Spawn7GreenNeonsAtRandomSpawnpoints();
-        Spawn7PinkNeonsAtRandomSpawnpoints();
+        Spawn12OrangeNeonsAtRandomSpawnpoints();
+        Spawn12GreenNeonsAtRandomSpawnpoints();
+        Spawn12PinkNeonsAtRandomSpawnpoints();
     }
 
     public void CheckHowManyOrangeActive()
@@ -42,7 +42,7 @@ public class NeonsSpawner : MonoBehaviour
         }
         if (orangeActive == 0)
         {
-            Spawn7OrangeNeonsAtRandomSpawnpoints();
+            Spawn12OrangeNeonsAtRandomSpawnpoints();
         }
     }
     public void CheckHowManyGreenActive()
@@ -57,7 +57,7 @@ public class NeonsSpawner : MonoBehaviour
         }
         if (greenActive == 0)
         {
-            Spawn7GreenNeonsAtRandomSpawnpoints();
+            Spawn12GreenNeonsAtRandomSpawnpoints();
         }
     }
     public void CheckHowManyPinkActive()
@@ -72,14 +72,14 @@ public class NeonsSpawner : MonoBehaviour
         }
         if (pinkActive == 0)
         {
-            Spawn7PinkNeonsAtRandomSpawnpoints();
+            Spawn12PinkNeonsAtRandomSpawnpoints();
         }
     }
 
-    private void Spawn7OrangeNeonsAtRandomSpawnpoints()
+    private void Spawn12OrangeNeonsAtRandomSpawnpoints()
     {
         
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 12; i++)
         {
             int randomNumber = Random.Range(0, orangeNeons.Count);
             if (orangeNeons[randomNumber].gameObject.activeSelf)
@@ -92,10 +92,10 @@ public class NeonsSpawner : MonoBehaviour
 
         }
     }
-    private void Spawn7GreenNeonsAtRandomSpawnpoints()
+    private void Spawn12GreenNeonsAtRandomSpawnpoints()
     {
 
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 12; i++)
         {
             int randomNumber = Random.Range(0, greenNeons.Count);
             if (greenNeons[randomNumber].gameObject.activeSelf)
@@ -108,10 +108,10 @@ public class NeonsSpawner : MonoBehaviour
 
         }
     }
-    private void Spawn7PinkNeonsAtRandomSpawnpoints()
+    private void Spawn12PinkNeonsAtRandomSpawnpoints()
     {
 
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 12; i++)
         {
             int randomNumber = Random.Range(0, pinkNeons.Count);
             if (pinkNeons[randomNumber].gameObject.activeSelf)
