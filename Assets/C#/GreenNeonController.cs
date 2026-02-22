@@ -23,9 +23,8 @@ public class GreenNeonController : MonoBehaviour, INeons
     }
     public void AcquireNeon()
     {
-        Renderer FlashlightVisualrenderer = FlashlighController.Instance.flashlightVisual.GetComponent<Renderer>();
+        FlashlighController.Instance.flashlightLight.color = greenColor;
 
-        FlashlightVisualrenderer.material = materialForFlashlight;
         CanPickUp = true;
 
     }

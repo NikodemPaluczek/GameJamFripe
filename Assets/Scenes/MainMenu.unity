@@ -581,7 +581,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 883959754}
         m_TargetAssemblyTypeName: ShowHideUI, Assembly-CSharp
-        m_MethodName: showCredits
+        m_MethodName: ShowCredits
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -759,7 +759,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 883959754}
         m_TargetAssemblyTypeName: ShowHideUI, Assembly-CSharp
-        m_MethodName: showControls
+        m_MethodName: ShowControls
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
