@@ -30,6 +30,8 @@ public class ProgressionManager : MonoBehaviour
     [SerializeField] Sprite[] orangeCounterSprites;
     [SerializeField] Sprite[] pinkCounterSprites;
     [SerializeField] Sprite[] greenCounterSprites;
+
+    [SerializeField] GameObject boulder;
     public void updateOrangeCounter(int amount)
     {
         orangeNeonsCounter += amount;
@@ -37,6 +39,7 @@ public class ProgressionManager : MonoBehaviour
         if(orangeNeonsCounter == 5)
         {
             OpenOrangeTeleports();
+            CheckIfWeHaveItAll();
         }
         orangeCounter.sprite = orangeCounterSprites[orangeNeonsCounter];
     }
@@ -56,6 +59,7 @@ public class ProgressionManager : MonoBehaviour
         if (greenNeonsCounter == 5)
         {
             UpgradeHealth();
+            CheckIfWeHaveItAll();
         }
         greenCounter.sprite = greenCounterSprites[greenNeonsCounter];
     }
@@ -71,5 +75,15 @@ public class ProgressionManager : MonoBehaviour
         pinkNeonsCounter++;
         math.clamp(pinkNeonsCounter, 0, 5); //we have to gather 5 of each
         pinkCounter.sprite = pinkCounterSprites[pinkNeonsCounter];
+        CheckIfWeHaveItAll();
+    }
+
+    private void CheckIfWeHaveItAll()
+    {
+        
+        if(orangeNeonsCounter == 5 && pinkNeonsCounter ==5 && greenNeonsCounter == 5)
+        {
+            boulder.SetActive(false);
+        }
     }
 }
