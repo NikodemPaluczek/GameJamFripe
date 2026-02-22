@@ -23,9 +23,8 @@ public class GreenNeonController : MonoBehaviour, INeons
     }
     public void AcquireNeon()
     {
-        Renderer FlashlightVisualrenderer = FlashlighController.Instance.flashlightVisual.GetComponent<Renderer>();
+        FlashlighController.Instance.flashlightLight.color = greenColor;
 
-        FlashlightVisualrenderer.material = materialForFlashlight;
         CanPickUp = true;
 
     }
@@ -52,6 +51,7 @@ public class GreenNeonController : MonoBehaviour, INeons
         gameObject.SetActive(false);
         elapsedTime = 0f;
         neonVisual.SetActive(false);
+        GreenNeonSound.Instance.PlaySound();
         ProgressionManager.Instance.updateGreenCounter();
         NeonsSpawner.Instance.CheckHowManyGreenActive();
         CanPickUp = false;

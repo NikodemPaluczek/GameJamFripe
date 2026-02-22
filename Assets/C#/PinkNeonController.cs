@@ -27,10 +27,8 @@ public class PinkNeonController : MonoBehaviour, INeons
     }
     public void AcquireNeon()
     {
-        
-        Renderer FlashlightVisualrenderer = FlashlighController.Instance.flashlightVisual.GetComponent<Renderer>();
+        FlashlighController.Instance.flashlightLight.color = pinkColor;
 
-        FlashlightVisualrenderer.material = materialForFlashlight;
 
         pushAwayDir = Player.Instance.transform.position - transform.position;
 
@@ -62,6 +60,7 @@ public class PinkNeonController : MonoBehaviour, INeons
         gameObject.SetActive(false);
         elapsedTime = 0f;
         neonVisual.SetActive(false);
+        PinkNeonSound.Instance.PlaySound();
         ProgressionManager.Instance.updatePinkCounter();
         NeonsSpawner.Instance.CheckHowManyOrangeActive();
         CanPickUp = false;

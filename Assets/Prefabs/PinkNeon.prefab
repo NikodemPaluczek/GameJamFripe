@@ -139,7 +139,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.62, y: 2.29, z: 1.25}
+  m_Size: {x: 2.35, y: 2.29, z: 1.95}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7684811392069803723
 MonoBehaviour:
@@ -156,3 +156,4 @@ MonoBehaviour:
   materialForFlashlight: {fileID: 2100000, guid: 18180663947f7a04a8f5176796ea398c, type: 2}
   neonVisual: {fileID: 918022551234177253}
   visualRenderer: {fileID: 107441163844308111}
+  explosionForce: 3

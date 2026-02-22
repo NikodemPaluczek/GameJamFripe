@@ -29,9 +29,7 @@ public class OrangeNeonController : MonoBehaviour, INeons
     }
     public void AcquireNeon()
     {
-        Renderer FlashlightVisualrenderer = FlashlighController.Instance.flashlightVisual.GetComponent<Renderer>();
-
-        FlashlightVisualrenderer.material = materialForFlashlight;
+        FlashlighController.Instance.flashlightLight.color = orangeColor;
         CanPickUp = true;
         
         
@@ -69,7 +67,8 @@ public class OrangeNeonController : MonoBehaviour, INeons
         gameObject.SetActive(false);
         elapsedTime = 0f;
         neonVisual.SetActive(false);
-        ProgressionManager.Instance.updateOrangeCounter();
+        OrangeNeonSound.Instance.PlaySound();
+        ProgressionManager.Instance.updateOrangeCounter(1);
         NeonsSpawner.Instance.CheckHowManyOrangeActive();
         CanPickUp = false;
 

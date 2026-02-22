@@ -15,18 +15,18 @@ public class FlashlighController : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public GameObject flashlightVisual;
     public Light flashlightLight;
     private float maxDistance = 3f;
-    [SerializeField] private float flashlightIntensity = 2f;
+    [SerializeField] private float flashlightIntensity = 36.5f;
     [SerializeField] private float requiredHoldTime = 3f;
 
-    Renderer visualRenderer;
 
     private INeons currentNeon;
     private float holdTimer;
 
     [SerializeField] private Material startMat;
+    
+    private Color startColor;
 
     private enum ActiveNeon
     {
@@ -40,8 +40,7 @@ public class FlashlighController : MonoBehaviour
 
     private void Start()
     {
-        visualRenderer = flashlightVisual.GetComponent<Renderer>();
-        startMat = visualRenderer.material;
+        startColor = flashlightLight.color;
     }
     private void Update()
     {
@@ -116,69 +115,96 @@ public class FlashlighController : MonoBehaviour
     IEnumerator UseOrangeAbility()
     {
         FlashlightOn();
-        Ray ray = new Ray(transform.position, transform.forward);
 
+        float timer = 0f;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+        while (timer < 2f)
         {
-            Enemy enemy = hit.collider.GetComponent<Enemy>();
-            if (enemy != null)
+            Ray ray = new Ray(transform.position, transform.forward);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
             {
-                Debug.Log("enemy hit");
-                StartCoroutine(enemy.OrangeAttack());
+                Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.StartCoroutine(enemy.OrangeAttack());
+                    FlashlightOff();
+                    currentActiveNeon = ActiveNeon.None;
+                    flashlightLight.color = startColor;
+                    yield break;
+                }
             }
+
+            timer += Time.deltaTime;
+            yield return null; 
         }
-        yield return new WaitForSeconds(1f);
+
         FlashlightOff();
         currentActiveNeon = ActiveNeon.None;
-        visualRenderer.material = startMat;
-
-
+        flashlightLight.color = startColor;
     }
 
     IEnumerator UseGreenAbility()
     {
         FlashlightOn();
-        Ray ray = new Ray(transform.position, transform.forward);
 
+        float timer = 0f;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+        while (timer < 2f)
         {
-            Enemy enemy = hit.collider.GetComponent<Enemy>();
-            if (enemy != null)
+            Ray ray = new Ray(transform.position, transform.forward);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
             {
-                Debug.Log("enemy hit");
-                StartCoroutine(enemy.GreenAttack());
+                Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.StartCoroutine(enemy.GreenAttack());
+                    FlashlightOff();
+                    currentActiveNeon = ActiveNeon.None;
+                    flashlightLight.color = startColor;
+                    yield break;
+                }
             }
+
+            timer += Time.deltaTime;
+            yield return null;
         }
-        yield return new WaitForSeconds(1f);
+
         FlashlightOff();
         currentActiveNeon = ActiveNeon.None;
-        visualRenderer.material = startMat;
-
-
+        flashlightLight.color = startColor;
     }
     IEnumerator UsePinkAbility()
     {
         FlashlightOn();
-        Ray ray = new Ray(transform.position, transform.forward);
 
+        float timer = 0f;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+        while (timer < 2f)
         {
-            Enemy enemy = hit.collider.GetComponent<Enemy>();
-            if (enemy != null)
+            Ray ray = new Ray(transform.position, transform.forward);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
             {
-                Debug.Log("enemy hit with pink");
-                StartCoroutine(enemy.PinkAttack());
+                Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.StartCoroutine(enemy.PinkAttack());
+                    FlashlightOff();
+                    currentActiveNeon = ActiveNeon.None;
+                    flashlightLight.color = startColor;
+                    yield break;
+                }
             }
+
+            timer += Time.deltaTime;
+            yield return null;
         }
-        yield return new WaitForSeconds(1f);
+
         FlashlightOff();
         currentActiveNeon = ActiveNeon.None;
-        visualRenderer.material = startMat;
-
-
+        flashlightLight.color = startColor;
     }
 
     public void ResetProgress()
@@ -194,12 +220,10 @@ public class FlashlighController : MonoBehaviour
 
     public void FlashlightOn()
     {
-        flashlightVisual.SetActive(true);
         flashlightLight.intensity = flashlightIntensity;
     }
     public void FlashlightOff()
     {
-        flashlightVisual.SetActive(false);
         flashlightLight.intensity = 0f;
     }
 
