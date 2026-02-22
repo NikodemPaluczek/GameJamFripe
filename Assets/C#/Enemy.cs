@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] SpiderAttackSounds spiderAttackSounds;
+    [SerializeField] SpiderDeathForSound spiderDeathForSound;
+
 
     [SerializeField] ToxicSpot toxicSpot;
 
@@ -32,6 +35,7 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(toxicSpot, transform.position, Quaternion.Euler(-90, 0,0));
         this.gameObject.SetActive(false);
+        spiderDeathForSound.PlaySound();
     }
 
     public IEnumerator OrangeAttack()
@@ -130,11 +134,12 @@ public class Enemy : MonoBehaviour
     {
         isUnderAttack = true;
         agent.isStopped = true;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.5f);
 
         if (distance < minDistance)
         {
             Player.Instance.UpdateHealth(-1);
+            spiderAttackSounds.PlaySound();
 
         }
         agent.isStopped = false;

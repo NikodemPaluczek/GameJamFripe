@@ -1,13 +1,24 @@
+using System;
 using TMPro;
-using UnityEditor.Timeline;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
-    [SerializeField] TextMeshProUGUI infoText;
+    [SerializeField] GameObject hp3;
+    [SerializeField] GameObject hp2;
+    [SerializeField] GameObject hp1;
+
+    [SerializeField] private Animator animator;
+
+    public static NavMeshAgent InstanceNavMesh { get; private set; }
     private void Awake()
     {
+        if(InstanceNavMesh == null)
+        {
+            InstanceNavMesh = GetComponent<NavMeshAgent>();
+        }
         if (Instance == null)
             Instance = this;
         else
@@ -22,13 +33,32 @@ public class Player : MonoBehaviour
     {
         HandleMovement();
     }
+
+    
+
     public void UpdateHealth(int health)
     {
         playerHealth = Mathf.Clamp(playerHealth + health, 0, 3);
-        infoText.text = $"HP = {playerHealth.ToString()} ";
+        if(playerHealth == 3)
+        {
+            hp3.SetActive(true);
+        }
+        else if (playerHealth == 2)
+        {
+            hp2.SetActive(true);
+            hp3.SetActive(false);
+        }
+        else if (playerHealth == 1)
+        {
+            hp2.SetActive(false);
+            hp3.SetActive(false);
+            hp1.SetActive(true);
+        }
         if (health == 0)
         {
-            //dyntka
+            hp2.SetActive(false);
+            hp3.SetActive(false);
+            hp1.SetActive(false);
         }
     }
 
@@ -37,6 +67,15 @@ public class Player : MonoBehaviour
         Vector2 movementInput = inputSystem.MovementInput();
         Vector3 moveDir = new Vector3(movementInput.x, 0, movementInput.y);
         float moveDistance = movementSpeed * Time.deltaTime;
+
+        if (moveDir != Vector3.zero)
+        {
+            animator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            animator.SetBool("IsRunning", false);
+        }
 
         transform.position += moveDir.normalized * movementSpeed * Time.deltaTime;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, rotationSpeed * Time.deltaTime);
