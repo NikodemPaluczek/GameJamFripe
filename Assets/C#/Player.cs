@@ -36,7 +36,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-        Debug.Log(playerHealth);
     }
 
     
@@ -68,7 +67,7 @@ public class Player : MonoBehaviour
             hp3.SetActive(false);
             hp1.SetActive(true);
         }
-        if (health == 0)
+        if (playerHealth == 0)
         {
             SceneManager.LoadScene("YouLose");
         }
