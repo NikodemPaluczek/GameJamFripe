@@ -53,8 +53,19 @@ public class ProgressionManager : MonoBehaviour
     {
         greenNeonsCounter++;
         math.clamp(greenNeonsCounter, 0, 5); //we have to gather 5 of each
+        if (greenNeonsCounter == 5)
+        {
+            UpgradeHealth();
+        }
         greenCounter.sprite = greenCounterSprites[greenNeonsCounter];
     }
+
+    private void UpgradeHealth()
+    {
+        Player.Instance.canHave4Hearts = true;
+        Player.Instance.UpdateHealth(4);
+    }
+
     public void updatePinkCounter()
     {
         pinkNeonsCounter++;

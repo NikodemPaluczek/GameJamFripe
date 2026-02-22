@@ -2,13 +2,17 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
+    [SerializeField] GameObject hp4;
     [SerializeField] GameObject hp3;
     [SerializeField] GameObject hp2;
     [SerializeField] GameObject hp1;
+
+    public bool canHave4Hearts = false;
 
     [SerializeField] private Animator animator;
 
@@ -32,15 +36,25 @@ public class Player : MonoBehaviour
     private void Update()
     {
         HandleMovement();
+        Debug.Log(playerHealth);
     }
 
     
 
     public void UpdateHealth(int health)
     {
-        playerHealth = Mathf.Clamp(playerHealth + health, 0, 3);
-        if(playerHealth == 3)
+        if (canHave4Hearts)
+            playerHealth = Mathf.Clamp(playerHealth + health, 0, 4);
+        else 
+            playerHealth = Mathf.Clamp(playerHealth + health, 0, 3);
+
+        if (playerHealth == 4)
         {
+            hp4.SetActive(true);
+        }
+        else if(playerHealth == 3)
+        {
+            hp4.SetActive(false);
             hp3.SetActive(true);
         }
         else if (playerHealth == 2)
@@ -56,9 +70,7 @@ public class Player : MonoBehaviour
         }
         if (health == 0)
         {
-            hp2.SetActive(false);
-            hp3.SetActive(false);
-            hp1.SetActive(false);
+            SceneManager.LoadScene("YouLose");
         }
     }
 
