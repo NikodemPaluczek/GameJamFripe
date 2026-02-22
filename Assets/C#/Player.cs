@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Player : MonoBehaviour
 {
@@ -7,8 +9,16 @@ public class Player : MonoBehaviour
     [SerializeField] GameObject hp3;
     [SerializeField] GameObject hp2;
     [SerializeField] GameObject hp1;
+
+    [SerializeField] private Animator animator;
+
+    public static NavMeshAgent InstanceNavMesh { get; private set; }
     private void Awake()
     {
+        if(InstanceNavMesh == null)
+        {
+            InstanceNavMesh = GetComponent<NavMeshAgent>();
+        }
         if (Instance == null)
             Instance = this;
         else
@@ -23,6 +33,9 @@ public class Player : MonoBehaviour
     {
         HandleMovement();
     }
+
+    
+
     public void UpdateHealth(int health)
     {
         playerHealth = Mathf.Clamp(playerHealth + health, 0, 3);
@@ -54,6 +67,15 @@ public class Player : MonoBehaviour
         Vector2 movementInput = inputSystem.MovementInput();
         Vector3 moveDir = new Vector3(movementInput.x, 0, movementInput.y);
         float moveDistance = movementSpeed * Time.deltaTime;
+
+        if (moveDir != Vector3.zero)
+        {
+            animator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            animator.SetBool("IsRunning", false);
+        }
 
         transform.position += moveDir.normalized * movementSpeed * Time.deltaTime;
         transform.forward = Vector3.Slerp(transform.forward, moveDir, rotationSpeed * Time.deltaTime);

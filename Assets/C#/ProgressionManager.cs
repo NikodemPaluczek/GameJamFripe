@@ -1,11 +1,15 @@
+using System;
 using TMPro;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ProgressionManager : MonoBehaviour
 {
     public static ProgressionManager Instance { get; private set; }
+
+    [SerializeField] private GameObject[] teleports;
 
     private void Awake()
     {
@@ -15,7 +19,7 @@ public class ProgressionManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private int orangeNeonsCounter = 0;
+    public int orangeNeonsCounter = 0;
     private int greenNeonsCounter = 0;
     private int pinkNeonsCounter = 0;
 
@@ -26,12 +30,25 @@ public class ProgressionManager : MonoBehaviour
     [SerializeField] Sprite[] orangeCounterSprites;
     [SerializeField] Sprite[] pinkCounterSprites;
     [SerializeField] Sprite[] greenCounterSprites;
-    public void updateOrangeCounter()
+    public void updateOrangeCounter(int amount)
     {
-        orangeNeonsCounter++;
+        orangeNeonsCounter += amount;
         math.clamp(orangeNeonsCounter, 0, 5); //we have to gather 5 of each
+        if(orangeNeonsCounter == 5)
+        {
+            OpenOrangeTeleports();
+        }
         orangeCounter.sprite = orangeCounterSprites[orangeNeonsCounter];
     }
+
+    private void OpenOrangeTeleports()
+    {
+        foreach (GameObject teleport in teleports)
+        {
+            teleport.SetActive(true);
+        }
+    }
+
     public void updateGreenCounter()
     {
         greenNeonsCounter++;
