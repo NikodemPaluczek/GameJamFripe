@@ -53,7 +53,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.12, z: 1}
+  m_Size: {x: 1.98, y: 2.12, z: 1.99}
   m_Center: {x: 0, y: 0.46, z: 0}
 --- !u!114 &1693190994974008012
 MonoBehaviour:
@@ -67,11 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e65b8d8ce2f4a489066661046905e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flashlighController: {fileID: 0}
   materialForFlashlight: {fileID: 2100000, guid: a28720f8cfec7a74899e7dee6aefe86c, type: 2}
   neonVisual: {fileID: 9113381542691034023}
   visualRenderer: {fileID: 7400053232995504077}
-  emissionIntenisty: 5
 --- !u!1 &9113381542691034023
 GameObject:
   m_ObjectHideFlags: 0
